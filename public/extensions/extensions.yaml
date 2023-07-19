@@ -82,6 +82,14 @@ details:
             $hasDocs := $count($docsLink) > 0;
           )'
 form:
+  - simple: true
+    path: spec.channel
+    widget: Custom
+    customProps:
+      componentType: busola-webcomponents
+      componentName: sth-sth
+      name: Agatha
+    required: true
   # - simple: true
   #   path: spec.channel
   #   widget: Custom

@@ -1,6 +1,9 @@
 import React, { Fragment } from 'react';
+import ReactDOM from 'react-dom';
+
 import { useJsonata } from '../hooks/useJsonata';
 import { useVariables } from '../hooks/useVariables';
+import reactToWebComponent from 'react-to-webcomponent';
 
 export function CustomComponent({
   storeKeys,
@@ -75,11 +78,14 @@ export function CustomComponent({
   let ui5Components, DynamicComponentClass;
   if (componentType === 'ui5') {
     ui5Components = require(`/node_modules/@ui5/webcomponents-react/dist/webComponents/${componentName}/index.js`);
+  } else if (componentType === 'busola-webcomponents') {
+    ui5Components = require(`/node_modules/busola-web-components/src/index.js`);
   } else if (componentType === 'custom') {
     DynamicComponentClass = require(`/custom-components/${componentName}`)
       .default;
     if (!customElements.get(componentNameWithPrefix)) {
       customElements.define(componentNameWithPrefix, DynamicComponentClass);
+      // customElements.define(componentNameWithPrefix, reactToWebComponent(DynamicComponentClass, React, ReactDOM));
     }
   } else {
     return <>ERROR</>;
