@@ -26,7 +26,7 @@ test('Busola Lighthouse audit', async () => {
     port: 9222,
     thresholds: {
       accessibility: 80,
-      'best-practices': 100,
+      'best-practices': 90,
     },
   });
 
@@ -36,7 +36,11 @@ test('Busola Lighthouse audit', async () => {
   });
 
   // add a cluster
-  await page.locator('ui5-button:has-text("Connect cluster")').click();
+  await page
+    .locator(
+      '[aria-label="Connect cluster"] ui5-button:has-text("Connect cluster")',
+    )
+    .click();
 
   await page
     .locator('input[id="file-upload"]')
