@@ -129,6 +129,24 @@ Cypress.Commands.add('getEndColumn', () => {
   return cy.get('div[slot="endColumn"]');
 });
 
+Cypress.Commands.add('clickEditTab', () => {
+  return cy
+    .get('ui5-tabcontainer')
+    .find('[role="tablist"]')
+    .find('[role="tab"]')
+    .contains('Edit')
+    .click();
+});
+
+Cypress.Commands.add('clickViewTab', () => {
+  return cy
+    .get('ui5-tabcontainer')
+    .find('[role="tablist"]')
+    .find('[role="tab"]')
+    .contains('View')
+    .click();
+});
+
 Cypress.Commands.add(
   'deleteInDetails',
   (resourceType, resourceName, columnLayout = false) => {
