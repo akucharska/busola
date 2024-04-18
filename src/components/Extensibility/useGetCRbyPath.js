@@ -5,7 +5,7 @@ import pluralize from 'pluralize';
 import { extensionsState } from 'state/navigation/extensionsAtom';
 import { columnLayoutState } from 'state/columnLayoutAtom';
 
-export const useGetCRbyPath = (resourceName, namespace) => {
+export const useGetCRbyPath = (resourceName, resourceType, namespace) => {
   const { namespaceId } = useParams();
   const extensions = useRecoilValue(extensionsState);
   const { name: clusterName } = useRecoilValue(clusterState) || {};
@@ -14,7 +14,6 @@ export const useGetCRbyPath = (resourceName, namespace) => {
   const resource = extensions.find(el => {
     const { scope, urlPath, resource } = el.general || {};
     const extensionPath = urlPath || pluralize(resource?.kind?.toLowerCase());
-
     const hasCorrectScope =
       (scope?.toLowerCase() === 'namespace') === !!namespaceId ||
       (scope?.toLowerCase() === 'namespace') === !!namespace;
@@ -28,8 +27,8 @@ export const useGetCRbyPath = (resourceName, namespace) => {
       .replace('kymamodules/', '')
       .replace(`/${resourceName}`, '');
 
-    return layoutState?.midColumn?.resourceType
-      ? layoutState?.midColumn?.resourceType === extensionPath
+    return layoutState?.midColumn?.resourceType || resourceType
+      ? layoutState?.midColumn?.resourceType || resourceType === extensionPath
       : crPath.split('/')[0] === extensionPath;
   });
 

@@ -127,12 +127,13 @@ export const ExtensibilityDetailsCore = ({
 };
 const ExtensibilityDetails = ({
   resourceName,
+  resourceType,
   namespaceId,
   layoutCloseCreateUrl,
 }) => {
-  const resMetaData = useGetCRbyPath(resourceName, namespaceId);
+  const resMetaData = useGetCRbyPath(resourceName, resourceType, namespaceId);
   const { urlPath, defaultPlaceholder } = resMetaData?.general || {};
-
+  if (!resMetaData) return null;
   return (
     <TranslationBundleContext.Provider
       value={{
